@@ -18,7 +18,7 @@ import main.java.utils.CC_Parametros;
 //Clase que contiene los Pasos Funcionales automatizados
 public class CC_Test extends GG_BaseTest {
 	static int gloFilas = 0;
-	public static String gloVerFlujo = "S";
+	public static String gloVerFlujo = "N";
 
 	@Test(enabled = true, dataProvider = "Data")
 	public void CC_QA_Automatizacion(String args[]) throws InterruptedException {
@@ -39,7 +39,7 @@ public class CC_Test extends GG_BaseTest {
 		System.out.println("*** Archivo leido: " + CC_Parametros.gloDir + "\\data\\TotalCasosDePruebas.txt");
 		System.out.println("*** Total Casos de Prueba a ejecutar: " + gloFilas + ".");
 		
-		if (gloVerFlujo.equals("S")) {
+		if (gloVerFlujo.equals("N")) {
 			System.out.println("*** La ejecución del Flujo será visible por pantalla.");
 		} else {
 			System.out.println("*** La ejecución del Flujo NO será visible por pantalla, se ejecutará en Background.");

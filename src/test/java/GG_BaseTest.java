@@ -1,5 +1,27 @@
 package test.java;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -8,29 +30,6 @@ import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-
-import org.openqa.selenium.UnexpectedAlertBehaviour;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.testng.ITestResult;
-import org.testng.annotations.*;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Method;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 
 import main.java.utils.CC_Parametros;
 import test.java.carritocompras.CC_Test;
@@ -80,8 +79,8 @@ public class GG_BaseTest {
         setUpDriver(browserName);
         driver.manage().window().maximize();
         driver.get(CC_Parametros.url);
-        driver.manage().timeouts().pageLoadTimeout(45, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(45, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
     @AfterMethod
@@ -131,9 +130,10 @@ public class GG_BaseTest {
             System.setProperty("webdriver.chrome.driver", CC_Parametros.gloDir + File.separator + "drivers" + File.separator + "chromedriver.exe");
 
             //Skip captcha
-            ChromeOptions options = new ChromeOptions();
-
-            options.addArguments("--headless", "--disable-gpu",
+            ChromeOptions options = new ChromeOptions();            
+            
+            //options.addArguments("--headless", "--disable-gpu",
+            options.addArguments("--disable-gpu",
             "--window-size=1920,1200",
             "--ignore-certificate-errors", "--disable-extensions", "--no-sandbox",
             "--disable-dev-shm-usage");
@@ -141,10 +141,15 @@ public class GG_BaseTest {
             options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
             options.setExperimentalOption("useAutomationExtension", false);
             options.addArguments("--incognito", "--disable-blink-features=AutomationControlled");
-
-            options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
+            options.addArguments("--disable-features=AutofillServerCommunication,PasswordCheck,PasswordManager");
+            options.addArguments("--disable-features=SafetyTipUI,SafeBrowsingEnhancedProtection");
+            options.addArguments("--disable-blink-features=BlockCredentialedSubresources");
+            options.addArguments("--guest");
+            
+            options.setAcceptInsecureCerts(true);
+            
             if (CC_Test.gloVerFlujo.equals("S")) { //Ver el Flujo en el Browser
-            	driver = new ChromeDriver();
+            	driver = new ChromeDriver(options);
             } else {
             	driver = new ChromeDriver(options); //el argumento options es para que se ejecute en background
             }

@@ -1,5 +1,6 @@
 package main.java.pageEvents;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -15,32 +16,32 @@ import main.java.utils.GG_Validations;
 import test.java.carritocompras.CC_Test;
 
 //En esta clase se ejecutan los Pasos de la P�gina.
-public class CC_PasosFuncionales extends CC_Test{
+public class CC_PasosFuncionales extends CC_Test {
 
 	public CC_PasosFuncionales(WebDriver driver) {
 		CC_Test.driver = driver;
 	}
-
+	
 	public static void iniciarSesion(String usuario, String contrasena, String xNumero) {
 		
 		String currentEvent = new Throwable().getStackTrace()[0].getMethodName();
 
 		try {
 			GG_Utils.outputInfo(xNumero + ") PASO FUNCIONAL iniciado: " + currentEvent);
-
-			WebDriverWait wait = new WebDriverWait(driver, 50);
+			
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
 			GG_ElementFetch elementFetch = new GG_ElementFetch();
 			
 			Thread.sleep(1000);
 
-			//Se escribe el Nombre del Usuario
+			// Se escribe el Nombre del Usuario
 			WebElement inputNombreUsuarioElement = elementFetch.getWebElement("XPATH", CC_Localizadores.inputUsuario);
 			wait.until(ExpectedConditions.visibilityOf(inputNombreUsuarioElement));
 			GG_Eventos.writeOnInput(inputNombreUsuarioElement, usuario);
 			
 			Thread.sleep(3000);
 
-			//Se escribe la Contrasena
+			// Se escribe la Contrasena
 			WebElement inputContrasenaElement = elementFetch.getWebElement("XPATH", CC_Localizadores.inputContrasena);
 			wait.until(ExpectedConditions.visibilityOf(inputContrasenaElement));
 			GG_Eventos.writeOnInput(inputContrasenaElement, contrasena);
@@ -76,7 +77,7 @@ public class CC_PasosFuncionales extends CC_Test{
 			
 			GG_Utils.outputInfo(xNumero + ") PASO FUNCIONAL iniciado: " + currentEvent);
 
-			WebDriverWait wait = new WebDriverWait(driver, 50);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
 			GG_ElementFetch elementFetch = new GG_ElementFetch();
 
 			List<WebElement> listProductosElement = elementFetch.getListWebElements("XPATH", CC_Localizadores.listProductos);
@@ -106,6 +107,7 @@ public class CC_PasosFuncionales extends CC_Test{
 			WebElement spanCarritoElement = elementFetch.getWebElement("XPATH", CC_Localizadores.labelNumeroCarrito);
 			wait.until(ExpectedConditions.visibilityOf(spanCarritoElement));
 			String cantidadCarrito = spanCarritoElement.getText();
+			
 			GG_Validations.trueBooleanCondition(cantidadCarrito.contains(totalProductos),
 					"Se ha agregado producto(s) al carrito correctamente",
 					"No se ha agregado producto(s) al carrito correctamente, se esperaba '" + totalProductos + "'", currentEvent);

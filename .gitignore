@@ -1,0 +1,27 @@
+# Maven
+target/
+
+# TestNG / Reports
+test-output/
+surefire-reports/
+*.html
+
+# Logs / Evidencias
+CC_Logs_2p/
+screenshots/
+reporte/
+
+# Drivers
+*.exe
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

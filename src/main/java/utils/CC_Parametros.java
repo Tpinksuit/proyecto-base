@@ -6,7 +6,8 @@ public interface CC_Parametros {
     String nombreAutomatizador = "[Flujo-Automatizado]";
     String nombreProyecto = "[*Proyecto*]";
     
-    String gloDir = "c://Estructura_Base//CC_Logs_2p//";
+    String curDir = System.getProperty("user.dir");
+    String gloDir = curDir + "\\CC_Logs_2p\\";
     
     //Archivo CSV con los datos de entrada
     int gloColumnas = 5;
