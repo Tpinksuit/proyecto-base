@@ -1,27 +1,14 @@
-# Maven
+# ===== Outputs =====
+CC_Logs_2p/reporte/
+CC_Logs_2p/screenshots/
+test-output/
 target/
 
-# TestNG / Reports
-test-output/
-surefire-reports/
-*.html
+# ===== Drivers =====
+CC_Logs_2p/drivers/*.exe
 
-# Logs / Evidencias
-CC_Logs_2p/
-screenshots/
-reporte/
-
-# Drivers
-*.exe
-
-# Eclipse
+# ===== IDE =====
 .classpath
 .project
 .settings/
-
-# VS Code
 .vscode/
-
-# OS
-.DS_Store
-Thumbs.db

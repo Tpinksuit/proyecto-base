@@ -31,6 +31,7 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import main.java.utils.CC_Parametros;
 import test.java.carritocompras.CC_Test;
 
@@ -127,8 +128,9 @@ public class GG_BaseTest {
 
     public void setUpDriver(String browserName){
         if (browserName.equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", CC_Parametros.gloDir + File.separator + "drivers" + File.separator + "chromedriver.exe");
-
+            //System.setProperty("webdriver.chrome.driver", CC_Parametros.gloDir + File.separator + "drivers" + File.separator + "chromedriver.exe");
+        	WebDriverManager.chromedriver().setup();
+        	
             //Skip captcha
             ChromeOptions options = new ChromeOptions();            
             
